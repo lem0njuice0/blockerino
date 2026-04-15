@@ -108,9 +108,11 @@ export function StickyGameHud({gameMode, score}: {gameMode: GameModeType, score:
 	});
 
 	return <>
-		<Text style={styles.highScoreLabel}>{"👑" + Math.max(scoreState, highestScore)}</Text>
-		<BackButton />
-		<SettingsButton></SettingsButton>
+		<View style={styles.topBar}>
+			<BackButton />
+			<Text style={styles.highScoreLabel}>{"👑" + Math.max(scoreState, highestScore)}</Text>
+			<SettingsButton></SettingsButton>
+		</View>
 	</>
 }
 
@@ -138,48 +140,46 @@ function SettingsButton() {
 }
 
 const styles = StyleSheet.create({
+	topBar: {
+		position: 'absolute',
+		top: 24,
+		left: 20,
+		right: 20,
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		zIndex: 1000
+	},
 	settingsButton: {
-		width: 50,
-		height: 50,
-		borderRadius: 18,
+		width: 44,
+		height: 44,
+		borderRadius: 14,
 		backgroundColor: 'rgba(255, 255, 255, 0.85)',
 		justifyContent: 'center',
-		alignItems: 'center',
-		position: 'absolute',
-		alignSelf: 'flex-end',
-		zIndex: 1000,
-		top: 50,
-		right: 50
+		alignItems: 'center'
 	},
 	settingsEmoji: {
 		color: 'rgb(30, 30, 30)',
-		fontSize: 30
+		fontSize: 24
 	},
 	backButton: {
-		width: 50,
-		height: 50,
-		borderRadius: 18,
+		width: 44,
+		height: 44,
+		borderRadius: 14,
 		backgroundColor: 'rgba(255, 255, 255, 0.85)',
 		justifyContent: 'center',
-		alignItems: 'center',
-		position: 'absolute',
-		alignSelf: 'flex-start',
-		zIndex: 1000,
-		top: 50,
-		left: 50
+		alignItems: 'center'
 	},
 	backEmoji: {
 		color: 'rgb(30, 30, 30)',
-		fontSize: 26
+		fontSize: 22
 	},
 	highScoreLabel: {
 		color: 'rgb(30, 30, 30)',
 		fontFamily: 'Silkscreen',
-		fontSize: 35,
+		fontSize: 24,
 		fontWeight: '100',
-		position: 'absolute',
-		top: 110,
-		left: 50
+		textAlign: 'center'
 	},
 	hudContainer: {
 		width: '100%',
