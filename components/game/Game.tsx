@@ -1,7 +1,7 @@
 import { PieceData, getBlockCount } from '@/constants/Piece';
 import { DndProvider, DndProviderProps, Rectangle } from '@mgcrea/react-native-dnd';
 import React, { DependencyList, useEffect, useRef } from 'react';
-import { Platform, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Platform, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { GestureHandlerRootView, State } from 'react-native-gesture-handler';
 import { ReduceMotion, runOnJS, useSharedValue } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
@@ -63,6 +63,7 @@ export const Game = (({gameMode}: {gameMode: GameModeType}) => {
 	const combo = useSharedValue(0);
 	// How many moves ago was the last broken line?
 	const lastBrokenLine = useSharedValue(0);
+	const isGameOver = useSharedValue(false);
 
 	const scoreStorageId = useSharedValue<HighScoreId | undefined>(undefined);
 
@@ -76,6 +77,9 @@ export const Game = (({gameMode}: {gameMode: GameModeType}) => {
 
 	const handleDragEnd: DndProviderProps["onDragEnd"] = ({ active, over }) => {
 		"worklet";
+		if (isGameOver.value) {
+			return;
+		}
 		if (over) {
 			if (draggingPiece.value == null) {
 				return;
@@ -99,8 +103,8 @@ export const Game = (({gameMode}: {gameMode: GameModeType}) => {
 			if (linesBroken > 0) {
 				lastBrokenLine.value = 0;
 				combo.value += linesBroken;
-				// line break score + combo multiplier stuff
-				score.value += linesBroken * boardLength * (combo.value / 2) * pieceBlockCount;
+				// combo multiplier (base points x (combo + 1))
+				score.value += pieceBlockCount * (combo.value + 1);
 			} else {
 				lastBrokenLine.value++;
 				if (lastBrokenLine.value >= handSize) {
@@ -127,6 +131,12 @@ export const Game = (({gameMode}: {gameMode: GameModeType}) => {
 				hand.value = newHand;
 			}
 			board.value = newBoard;
+
+			const hasMove = createPossibleBoardSpots(board.value, hand.value[0]).length > 0 ||
+				hand.value.some((piece) => createPossibleBoardSpots(board.value, piece).length > 0);
+			if (!hasMove) {
+				isGameOver.value = true;
+			}
 		} else {
 			board.value = clearHoverBlocks([...board.value]);
 		}
@@ -181,6 +191,25 @@ export const Game = (({gameMode}: {gameMode: GameModeType}) => {
 						<BlockGrid board={board} possibleBoardDropSpots={possibleBoardDropSpots} hand={hand} draggingPiece={draggingPiece}></BlockGrid>
 						<HandPieces hand={hand}></HandPieces>
 					</DndProvider>
+					{isGameOver.value && (
+						<View style={styles.gameOverOverlay}>
+							<Text style={styles.gameOverTitle}>ゲームオーバー</Text>
+							<Text style={styles.gameOverScore}>{`スコア ${score.value}`}</Text>
+							<Pressable
+								onPress={() => {
+									isGameOver.value = false;
+									board.value = newEmptyBoard(boardLength);
+									hand.value = createRandomHandWorklet(handSize);
+									score.value = 0;
+									combo.value = 0;
+									lastBrokenLine.value = 0;
+								}}
+								style={styles.gameOverButton}
+							>
+								<Text style={styles.gameOverButtonText}>もう一度</Text>
+							</Pressable>
+						</View>
+					)}
 				</View>
 			</GestureHandlerRootView>
 		</SafeAreaView>
@@ -196,6 +225,42 @@ const styles = StyleSheet.create({
 		padding: 0,
 		overflow: 'hidden',
 		backgroundColor: 'rgba(255, 255, 255, 0.15)'
+	},
+	gameOverOverlay: {
+		position: 'absolute',
+		width: '86%',
+		paddingVertical: 24,
+		paddingHorizontal: 20,
+		backgroundColor: 'rgba(255, 255, 255, 0.92)',
+		borderRadius: 20,
+		borderWidth: 1,
+		borderColor: 'rgba(255, 255, 255, 0.65)',
+		alignItems: 'center',
+		gap: 12
+	},
+	gameOverTitle: {
+		fontFamily: 'Silkscreen',
+		fontSize: 28,
+		color: 'rgb(30, 30, 30)'
+	},
+	gameOverScore: {
+		fontFamily: 'Silkscreen',
+		fontSize: 20,
+		color: 'rgb(60, 60, 60)'
+	},
+	gameOverButton: {
+		marginTop: 8,
+		paddingVertical: 10,
+		paddingHorizontal: 24,
+		borderRadius: 12,
+		backgroundColor: 'rgba(255, 139, 106, 0.9)',
+		borderWidth: 1,
+		borderColor: 'rgba(255, 255, 255, 0.6)'
+	},
+	gameOverButtonText: {
+		fontFamily: 'Silkscreen',
+		fontSize: 18,
+		color: 'rgb(30, 30, 30)'
 	}
 })
 
