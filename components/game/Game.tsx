@@ -5,7 +5,7 @@ import { Platform, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react
 import { GestureHandlerRootView, State } from 'react-native-gesture-handler';
 import { ReduceMotion, runOnJS, useSharedValue } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
-import { BoardBlockType, GRID_BLOCK_SIZE, JS_emptyPossibleBoardSpots, PossibleBoardSpots, XYPoint, breakLines, clearHoverBlocks, createPossibleBoardSpots, emptyPossibleBoardSpots, newEmptyBoard, placePieceOntoBoard, updateHoveredBreaks } from '@/constants/Board';
+import { BoardBlockType, GRID_BLOCK_SIZE, JS_emptyPossibleBoardSpots, PossibleBoardSpots, XYPoint, breakLines, clearHoverBlocks, createPossibleBoardSpots, emptyPossibleBoardSpots, hasPossibleMove, newEmptyBoard, placePieceOntoBoard, updateHoveredBreaks } from '@/constants/Board';
 import { StatsGameHud, StickyGameHud } from '@/components/game/GameHud';
 import BlockGrid from '@/components/game/BlockGrid';
 import { createRandomHand, createRandomHandWorklet } from '@/constants/Hand';
@@ -64,6 +64,7 @@ export const Game = (({gameMode}: {gameMode: GameModeType}) => {
 	// How many moves ago was the last broken line?
 	const lastBrokenLine = useSharedValue(0);
 	const isGameOver = useSharedValue(false);
+	const [gameOverUI, setGameOverUI] = React.useState(false);
 
 	const scoreStorageId = useSharedValue<HighScoreId | undefined>(undefined);
 
@@ -132,10 +133,10 @@ export const Game = (({gameMode}: {gameMode: GameModeType}) => {
 			}
 			board.value = newBoard;
 
-			const hasMove = createPossibleBoardSpots(board.value, hand.value[0]).length > 0 ||
-				hand.value.some((piece) => createPossibleBoardSpots(board.value, piece).length > 0);
+			const hasMove = hasPossibleMove(board.value, hand.value as PieceData[]);
 			if (!hasMove) {
 				isGameOver.value = true;
+				runOnJS(setGameOverUI)(true);
 			}
 		} else {
 			board.value = clearHoverBlocks([...board.value]);
@@ -191,13 +192,14 @@ export const Game = (({gameMode}: {gameMode: GameModeType}) => {
 						<BlockGrid board={board} possibleBoardDropSpots={possibleBoardDropSpots} hand={hand} draggingPiece={draggingPiece}></BlockGrid>
 						<HandPieces hand={hand}></HandPieces>
 					</DndProvider>
-					{isGameOver.value && (
+					{gameOverUI && (
 						<View style={styles.gameOverOverlay}>
 							<Text style={styles.gameOverTitle}>ゲームオーバー</Text>
 							<Text style={styles.gameOverScore}>{`スコア ${score.value}`}</Text>
 							<Pressable
 								onPress={() => {
 									isGameOver.value = false;
+									setGameOverUI(false);
 									board.value = newEmptyBoard(boardLength);
 									hand.value = createRandomHandWorklet(handSize);
 									score.value = 0;

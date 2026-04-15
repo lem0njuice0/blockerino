@@ -101,6 +101,23 @@ export function createPossibleBoardSpots(
   return fitPositions;
 }
 
+export function hasPossibleMove(board: Board, hand: (PieceData | null)[]): boolean {
+  "worklet";
+  for (let i = 0; i < hand.length; i++) {
+    const piece = hand[i];
+    if (piece == null) continue;
+    const spots = createPossibleBoardSpots(board, piece);
+    for (let y = 0; y < spots.length; y++) {
+      for (let x = 0; x < spots[y].length; x++) {
+        if (spots[y][x] === 1) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
 export function clearHoverBlocks(board: Board): Board {
   "worklet";
   const boardLength = board.length;
