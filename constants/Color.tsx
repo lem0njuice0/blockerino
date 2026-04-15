@@ -1,8 +1,11 @@
 export const cssColors = {
-    brightNiceRed: "#FF3333",
-    pink: "#FF00FF",
-    green: "#00FF00",
-    pitchBlack: "#000000",
+    accentWarm: "#FF8B6A",
+    accentSoft: "#FFBA7A",
+    accentLeaf: "#2AAE6A",
+    ink: "#101623",
+    softInk: "rgba(16, 22, 35, 0.65)",
+    panel: "rgba(255, 255, 255, 0.78)",
+    panelStroke: "rgba(255, 255, 255, 0.6)",
     spaceGray: "rgb(90, 90, 90)"
 }
 
@@ -58,7 +61,8 @@ export function colorToHex(color: Color | null): string {
 
     const toHex = (value: number) => {
         const clamped = Math.max(0, Math.min(255, value));
-        return clamped.toString(16).padStart(2, '0');
+        const hex = clamped.toString(16);
+        return hex.length === 1 ? `0${hex}` : hex;
     };
 
     return `#${toHex(color.r)}${toHex(color.g)}${toHex(color.b)}`;

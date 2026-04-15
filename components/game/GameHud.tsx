@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
 		width: 50,
 		height: 50,
 		borderRadius: 18,
-		backgroundColor: 'rgba(20, 20, 20, 0.8)',
+		backgroundColor: 'rgba(255, 255, 255, 0.85)',
 		justifyContent: 'center',
 		alignItems: 'center',
 		position: 'absolute',
@@ -138,11 +138,11 @@ const styles = StyleSheet.create({
 		right: 50
 	},
 	settingsEmoji: {
-		color: 'white',
+		color: 'rgb(30, 30, 30)',
 		fontSize: 30
 	},
 	highScoreLabel: {
-		color: 'rgb(240, 175, 12)',
+		color: 'rgb(30, 30, 30)',
 		fontFamily: 'Silkscreen',
 		fontSize: 35,
 		fontWeight: '100',
@@ -163,13 +163,18 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		marginTop: 14,
 		marginBottom: 14,
+		backgroundColor: 'rgba(255, 255, 255, 0.75)',
+		borderRadius: 12,
+		borderWidth: 1,
+		borderColor: 'rgba(255, 255, 255, 0.6)'
 	},
 	comboBarParent: {
 		width: '100%',
 		height: 16,
 		borderWidth: 2,
 		borderRadius: 10,
-		borderColor: 'gray',
+		borderColor: 'rgba(255, 255, 255, 0.7)',
+		backgroundColor: 'rgba(255, 255, 255, 0.6)',
 		zIndex: 100,
 	},
 	comboBar: {

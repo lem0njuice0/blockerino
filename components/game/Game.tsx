@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		padding: 0,
 		overflow: 'hidden',
-		backgroundColor: 'rgba(0, 0, 0, 0.4)' 
+		backgroundColor: 'rgba(255, 255, 255, 0.15)'
 	}
 })
 

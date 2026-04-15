@@ -54,7 +54,7 @@ export default function MainMenu() {
 			onClick={() => {
 				appendAppState(GameModeType.Classic);
 			}}
-			backgroundColor={cssColors.brightNiceRed}
+			backgroundColor={cssColors.accentWarm}
 			title={"Classic ∞"}
 			flavorText={"classical line breaking"}
 			idleBounce={true}
@@ -63,19 +63,19 @@ export default function MainMenu() {
 			onClick={() => {
 				appendAppState(GameModeType.Chaos);
 			}}
-			backgroundColor={cssColors.pitchBlack}
+			backgroundColor={cssColors.ink}
 			title={"Chaos !?"}
 			flavorText={"10x10, 5 piece hand!?"}
-			style={{ borderWidth: 2, borderColor: "rgb(50, 50, 50)" }}
+			style={{ borderWidth: 2, borderColor: "rgba(255, 255, 255, 0.3)" }}
 			textStyle={{ color: "white" }}
 			idleBounceRotate={true}
 		/>
 		<MainButton onClick = {() => {
 			appendAppState(MenuStateType.HIGH_SCORES)
-		}} backgroundColor={cssColors.pink} title={"High Scores"} />
+		}} backgroundColor={cssColors.accentSoft} title={"High Scores"} />
 		<MainButton onClick = {() => {
 			appendAppState(MenuStateType.OPTIONS)
-		}} backgroundColor={cssColors.green} title={"Options"} />
+		}} backgroundColor={cssColors.accentLeaf} title={"Options"} />
 
 		<Animated.Text entering={FadeIn} style={styles.footer}>
 			beta version
@@ -201,14 +201,18 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		width: '100%',
-		height: '100%'
+		height: '100%',
+		paddingVertical: 24
 	},
 	logo: {
 		fontFamily: "Silkscreen",
 		fontSize: 40,
-		color: "#FFF",
+		color: cssColors.ink,
 		marginBottom: 50,
 		textAlign: "center",
+		textShadowColor: "rgba(255, 255, 255, 0.6)",
+		textShadowOffset: { width: 1, height: 1 },
+		textShadowRadius: 6,
 	},
 	button: {
 		width: "100%",
@@ -217,7 +221,13 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		marginBottom: 20,
 		borderRadius: 8,
-		borderWidth: 2
+		borderWidth: 2,
+		borderColor: "rgba(255, 255, 255, 0.65)",
+		shadowColor: "rgba(17, 24, 39, 0.18)",
+		shadowOpacity: 1,
+		shadowRadius: 18,
+		shadowOffset: { width: 0, height: 10 },
+		elevation: 8
 	},
 	buttonPressable: {
 		width: "80%",
@@ -231,19 +241,19 @@ const styles = StyleSheet.create({
 	buttonText: {
 		fontFamily: "Silkscreen",
 		fontSize: 24,
-		color: "black",
+		color: cssColors.ink,
 		textAlign: 'center'
 	},
 	buttonFlavorText: {
 		fontFamily: "Silkscreen",
 		fontSize: 14,
-		color: "rgb(30, 30, 30)",
+		color: cssColors.softInk,
 		textAlign: 'center'
 	},
 	footer: {
 		fontFamily: "Silkscreen",
 		fontSize: 16,
-		color: "#555",
+		color: cssColors.softInk,
 		position: "absolute",
 		bottom: 20,
 	},
