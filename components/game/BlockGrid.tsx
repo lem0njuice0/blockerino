@@ -15,7 +15,7 @@ import {
 } from "@/constants/Piece";
 import { useDroppable } from "@mgcrea/react-native-dnd";
 import { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, useWindowDimensions } from "react-native";
 import Animated, {
 	SharedValue,
 	runOnJS,
@@ -145,6 +145,7 @@ export default function BlockGrid({
 	draggingPiece,
 	hand
 }: BlockGridProps) {
+	const { width } = useWindowDimensions();
 	const blockElements: any[] = [];
 	const boardLength = board.value.length;
 	forEachBoardBlock(board.value, (_block, x, y) => {
@@ -184,15 +185,18 @@ export default function BlockGrid({
 		return style;
 	});
 	
+	const boardPixelSize = GRID_BLOCK_SIZE * boardLength + 6;
+	const maxWidth = width * 0.92;
+	const scale = boardPixelSize > maxWidth ? maxWidth / boardPixelSize : 1;
+
 	return (
 		<Animated.View
 			style={[
 				styles.grid,
 				{
-					width: GRID_BLOCK_SIZE * boardLength + 6,
-					height: GRID_BLOCK_SIZE * boardLength + 6,
-					maxWidth: '92%',
-					maxHeight: '92%'
+					width: boardPixelSize,
+					height: boardPixelSize,
+					transform: [{ scale }]
 				},
 				gridStyle
 			]}
