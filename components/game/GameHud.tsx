@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Pressable, StyleSheet, Text, View } from "react-native"
+import { Linking, Pressable, StyleSheet, Text, View } from "react-native"
 import Animated, { SharedValue, interpolateColor, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withSpring, withTiming } from "react-native-reanimated"
 import { Hand } from "@/constants/Hand";
 import { GameModeType, MenuStateType, useAppState } from "@/hooks/useAppState";
@@ -109,8 +109,22 @@ export function StickyGameHud({gameMode, score}: {gameMode: GameModeType, score:
 
 	return <>
 		<Text style={styles.highScoreLabel}>{"👑" + Math.max(scoreState, highestScore)}</Text>
+		<BackButton />
 		<SettingsButton></SettingsButton>
 	</>
+}
+
+function BackButton() {
+	return (
+		<Pressable
+			onPress={() => {
+				Linking.openURL("https://cocoapp-five.vercel.app");
+			}}
+			style={styles.backButton}
+		>
+			<Text style={styles.backEmoji}>{"↩︎"}</Text>
+		</Pressable>
+	);
 }
 
 function SettingsButton() {
@@ -141,13 +155,30 @@ const styles = StyleSheet.create({
 		color: 'rgb(30, 30, 30)',
 		fontSize: 30
 	},
+	backButton: {
+		width: 50,
+		height: 50,
+		borderRadius: 18,
+		backgroundColor: 'rgba(255, 255, 255, 0.85)',
+		justifyContent: 'center',
+		alignItems: 'center',
+		position: 'absolute',
+		alignSelf: 'flex-start',
+		zIndex: 1000,
+		top: 50,
+		left: 50
+	},
+	backEmoji: {
+		color: 'rgb(30, 30, 30)',
+		fontSize: 26
+	},
 	highScoreLabel: {
 		color: 'rgb(30, 30, 30)',
 		fontFamily: 'Silkscreen',
 		fontSize: 35,
 		fontWeight: '100',
 		position: 'absolute',
-		top: 50,
+		top: 110,
 		left: 50
 	},
 	hudContainer: {
