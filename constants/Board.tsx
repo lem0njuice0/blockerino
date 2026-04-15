@@ -1,8 +1,8 @@
 import { Color } from "./Color";
 import { getRandomPieceColor, PieceData } from "./Piece";
 
-export const GRID_BLOCK_SIZE = 46;
-export const HAND_BLOCK_SIZE = 22;
+export const GRID_BLOCK_SIZE = 38;
+export const HAND_BLOCK_SIZE = 20;
 export const HITBOX_SIZE = 12;
 export const DRAG_JUMP_LENGTH = 116;
 

@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text } from "react-native";
 
 
-export default function StylizedButton({text, onClick, backgroundColor, centered, borderColor}: {text: string, onClick?: () => void, backgroundColor: string, centered?: boolean, borderColor?: string}) {
+export default function StylizedButton({text, onClick, backgroundColor, centered, borderColor, textColor}: {text: string, onClick?: () => void, backgroundColor: string, centered?: boolean, borderColor?: string, textColor?: string}) {
     if (centered == undefined) {
         centered = true;
     }
@@ -11,7 +11,7 @@ export default function StylizedButton({text, onClick, backgroundColor, centered
             borderWidth: 2, 
             borderColor: borderColor ? borderColor : "transparent"
         }]}>
-        <Text style={styles.stylizedButtonText}>{text}</Text>
+        <Text style={[styles.stylizedButtonText, textColor ? { color: textColor } : null]}>{text}</Text>
     </Pressable>
 }
 

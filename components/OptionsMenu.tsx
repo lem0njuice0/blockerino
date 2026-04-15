@@ -8,9 +8,9 @@ export default function OptionsMenu() {
 	const [ appState, setAppState, _appendAppState, popAppState ] = useAppState();
 
 	return <SimplePopupView>
-		<StylizedButton onClick={popAppState} text="Back" backgroundColor={cssColors.spaceGray}></StylizedButton>
+		<StylizedButton onClick={popAppState} text="戻る" backgroundColor={cssColors.spaceGray}></StylizedButton>
 		{ appState.containsGameMode() && 
-			<StylizedButton onClick={() => { setAppState(MenuStateType.MENU) }} text="Quit Run" backgroundColor={cssColors.brightNiceRed}></StylizedButton>
+			<StylizedButton onClick={() => { setAppState(MenuStateType.MENU) }} text="ゲームを終了" backgroundColor={cssColors.accentWarm}></StylizedButton>
 		}
 	</SimplePopupView>
 }

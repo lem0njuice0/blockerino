@@ -18,21 +18,21 @@ export default function HighScores() {
     }, [gameMode, setHighScores]);
 
     return <SimplePopupView style={[{justifyContent: 'flex-start'}]}>
-        <StylizedButton text="Back" onClick={popAppState} backgroundColor={cssColors.spaceGray}></StylizedButton>
+        <StylizedButton text="戻る" onClick={popAppState} backgroundColor={cssColors.spaceGray}></StylizedButton>
         { highScores.length > 0 &&
             <>
                 <Text style={styles.subHeader}>
-                    {"Select a game mode..."}
+                    {"モードを選択"}
                 </Text>
                 <View style={{flexDirection: 'row'}}>
-                    <StylizedButton text="Classic" onClick={() => { setGameMode(GameModeType.Classic) }} backgroundColor={cssColors.brightNiceRed}></StylizedButton>
-                    <StylizedButton text="Chaos" onClick={() => { setGameMode(GameModeType.Chaos) }} backgroundColor={cssColors.pitchBlack}></StylizedButton>
+                    <StylizedButton text="クラシック" onClick={() => { setGameMode(GameModeType.Classic) }} backgroundColor={cssColors.accentWarm}></StylizedButton>
+                    <StylizedButton text="カオス" onClick={() => { setGameMode(GameModeType.Chaos) }} backgroundColor={cssColors.ink} textColor="white"></StylizedButton>
                 </View>
                 <Text style={styles.header}>
-                    {"All classic high scores (top 10)"}
+                    {"クラシック ハイスコア TOP10"}
                 </Text>
                 <Text style={styles.subHeader}>
-                    {"Sorted from high to low."}
+                    {"スコア順"}
                 </Text>
                 {
                     highScores.map((score, idx) => {
@@ -43,13 +43,13 @@ export default function HighScores() {
         }
         { highScores.length == 0 && 
             <>
-                <Text style={styles.noScoresText}>{"You haven't set a score yet? Get playing!"}</Text>
-                <StylizedButton text="Play Classic" onClick={() => {
+                <Text style={styles.noScoresText}>{"まだスコアがありません"}</Text>
+                <StylizedButton text="クラシックで遊ぶ" onClick={() => {
                     setAppState(GameModeType.Classic)
-                }} backgroundColor={cssColors.brightNiceRed}></StylizedButton>
-                <StylizedButton text="Play Chaos" onClick={() => {
+                }} backgroundColor={cssColors.accentWarm}></StylizedButton>
+                <StylizedButton text="カオスで遊ぶ" onClick={() => {
                     setAppState(GameModeType.Chaos)
-                }} backgroundColor={cssColors.pitchBlack} borderColor="white"></StylizedButton>
+                }} backgroundColor={cssColors.ink} textColor="white" borderColor="white"></StylizedButton>
             </>
         }
     </SimplePopupView>
@@ -88,30 +88,30 @@ function createTimeAgoString(date: number): string {
 
 const styles = StyleSheet.create({
     noScoresText: {
-        color: 'white',
-        fontSize: 30,
+        color: 'rgb(30, 30, 30)',
+        fontSize: 28,
         fontFamily: 'Silkscreen',
         textAlign: 'center',
         marginBottom: 20
     },
     scoreValueText: {
-        color: 'white',
-        fontSize: 30,
+        color: 'rgb(30, 30, 30)',
+        fontSize: 26,
         fontFamily: 'Silkscreen'
     },
     scoreTimeText: {
-        color: 'rgb(150, 150, 150)',
-        fontSize: 15,
+        color: 'rgb(120, 120, 120)',
+        fontSize: 14,
         fontFamily: 'Silkscreen'
     },
     header: {
-        color: 'white',
-        fontSize: 30,
+        color: 'rgb(30, 30, 30)',
+        fontSize: 24,
         fontFamily: 'Silkscreen'
     },
     subHeader: {
-        color: 'rgb(100, 100, 100)',
-        fontSize: 24,
+        color: 'rgb(120, 120, 120)',
+        fontSize: 18,
         fontFamily: 'Silkscreen'
     }
 });

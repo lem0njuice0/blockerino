@@ -83,7 +83,7 @@ export default function HandPieces({ hand }: HandProps) {
 				height: pieceHeight * GRID_BLOCK_SIZE,
 				opacity: 1,
 				zIndex,
-				bottom: dragging ? DRAG_JUMP_LENGTH : 0,
+			bottom: dragging ? DRAG_JUMP_LENGTH : 0,
 				transform: [
 					{
 						translateX:
@@ -167,10 +167,10 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		flexDirection: 'row',
 		position: 'relative',
-		marginTop: 40,
+		marginTop: 24,
 		maxWidth: HAND_BLOCK_SIZE * 5 * 3,
 		maxHeight: HAND_BLOCK_SIZE * 5 * 2,
-		height: HAND_BLOCK_SIZE * 6,
+		height: HAND_BLOCK_SIZE * 5 * 2,
 		flexWrap: 'wrap',
 		alignSelf: 'center',
 		flex: 1,

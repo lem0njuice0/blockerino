@@ -191,6 +191,8 @@ export default function BlockGrid({
 				{
 					width: GRID_BLOCK_SIZE * boardLength + 6,
 					height: GRID_BLOCK_SIZE * boardLength + 6,
+					maxWidth: '92%',
+					maxHeight: '92%'
 				},
 				gridStyle
 			]}

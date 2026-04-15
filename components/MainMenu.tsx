@@ -47,7 +47,7 @@ export default function MainMenu() {
 
 		<BlockerinoLogo style={{position: 'absolute', bottom: 10, left: 10}} blockSize={5}></BlockerinoLogo>
 		<Animated.Text entering={BounceInUp.duration(800)} style={[styles.logo]}>
-			blockerino
+			Blockerino
 		</Animated.Text>
 
 		<MainButton
@@ -55,8 +55,8 @@ export default function MainMenu() {
 				appendAppState(GameModeType.Classic);
 			}}
 			backgroundColor={cssColors.accentWarm}
-			title={"Classic ∞"}
-			flavorText={"classical line breaking"}
+			title={"クラシック"}
+			flavorText={"8x8・3ピース"}
 			idleBounce={true}
 		/>
 		<MainButton
@@ -64,21 +64,21 @@ export default function MainMenu() {
 				appendAppState(GameModeType.Chaos);
 			}}
 			backgroundColor={cssColors.ink}
-			title={"Chaos !?"}
-			flavorText={"10x10, 5 piece hand!?"}
+			title={"カオス"}
+			flavorText={"10x10・5ピース"}
 			style={{ borderWidth: 2, borderColor: "rgba(255, 255, 255, 0.3)" }}
 			textStyle={{ color: "white" }}
 			idleBounceRotate={true}
 		/>
 		<MainButton onClick = {() => {
 			appendAppState(MenuStateType.HIGH_SCORES)
-		}} backgroundColor={cssColors.accentSoft} title={"High Scores"} />
+		}} backgroundColor={cssColors.accentSoft} title={"ハイスコア"} />
 		<MainButton onClick = {() => {
 			appendAppState(MenuStateType.OPTIONS)
-		}} backgroundColor={cssColors.accentLeaf} title={"Options"} />
+		}} backgroundColor={cssColors.accentLeaf} title={"設定"} />
 
 		<Animated.Text entering={FadeIn} style={styles.footer}>
-			beta version
+			beta
 		</Animated.Text>
 	</View>
 }
